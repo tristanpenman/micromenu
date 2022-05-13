@@ -4,6 +4,14 @@ require 'tty-prompt'
 
 home = Dir.getwd
 
+if ARGV.length > 0
+  # if the first argument looks like something other than a string
+  if ARGV[0].to_i.to_s != ARGV[0]
+    dir = ARGV.shift
+    Dir.chdir dir
+  end
+end
+
 def bye
   puts
   puts "Bye!"
@@ -52,11 +60,12 @@ puts "✨ μMenu ✨"
 
 loop do
   files = Dir.glob('*').sort
-  exit if files.empty?
 
   dirs = files.select { |f| File.directory? f }
   execs = files.select { |f| File.executable? f } - dirs
   list = dirs + execs
+  exit if list.empty?
+
   options = list.map.with_index do |name, value|
     {
       name: dirs.include?(name) ? "📁 #{name}" : name,
