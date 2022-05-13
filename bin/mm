@@ -23,7 +23,6 @@ def prompt
     end
     p
   end
-  $prompt
 end
 
 def choose(options)
