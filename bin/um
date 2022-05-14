@@ -4,8 +4,8 @@ require 'tty-prompt'
 
 home = Dir.getwd
 
-if ARGV.length > 0
-  # if the first argument looks like something other than a string
+if ARGV.length.positive?
+  # if the first argument looks like something other than a number
   if ARGV[0].to_i.to_s != ARGV[0]
     dir = ARGV.shift
     Dir.chdir dir
@@ -33,21 +33,23 @@ def prompt
   end
 end
 
+def show_prompt(options)
+  help = "(Use ↑/↓ arrow keys or numbers to select)"
+  prompt.select('Select an action:', options, enum: ')', cycle: true, help: help)
+rescue TTY::Reader::InputInterrupt
+  bye
+end
+
 def choose(options)
-  if ARGV.length > 0
+  if ARGV.length.positive?
     ARGV.shift
   else
-    begin
-      help = "(Use ↑/↓ arrow keys or numbers to select)"
-      prompt.select('Select an action:', options, enum: ')', cycle: true, help: help)
-    rescue TTY::Reader::InputInterrupt
-      bye
-    end
+    show_prompt(options)
   end
 end
 
 def args
-  if ARGV.length > 0
+  if ARGV.length.positive?
     ARGV
   else
     prompt.ask('Arguments:')&.split || []
