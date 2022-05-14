@@ -1,6 +1,6 @@
 # μMenu
 
-[![Gem Version](https://badge.fury.io/rb/micromenu.svg)][gem]
+[![Gem Version](https://badge.fury.io/rb/micromenu.svg)](https://badge.fury.io/rb/micromenu)
 
 A cute little menu system written in Ruby :smiling_face_with_three_hearts:
 
@@ -10,8 +10,8 @@ From GitHub:
 
     git clone git@github.com:tristanpenman/micromenu.git
     cd micromenu
-    gem install ./micromenu-*.gem
     gem build micromenu.gemspec
+    gem install ./micromenu-*.gem
 
 From RubyGems:
 
