@@ -1,32 +1,29 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'tty-prompt'
 
 home = Dir.getwd
 
-if ARGV.length.positive?
-  # if the first argument looks like something other than a number
-  if ARGV[0].to_i.to_s != ARGV[0]
-    dir = ARGV.shift
-    Dir.chdir dir
-  end
+if ARGV.length.positive? && (ARGV[0].to_i.to_s != ARGV[0])
+  # first argument looks like something other than a number
+  dir = ARGV.shift
+  Dir.chdir dir
 end
 
 def bye
   puts
-  puts "Bye!"
+  puts 'Bye!'
   exit
 end
 
 def prompt
-  $prompt ||= begin
+  @prompt ||= begin
     p = TTY::Prompt.new(interrupt: :signal)
     p.on(:keypress) do |event|
-      if event.value.to_i.to_s == event.value
-        p.trigger(:keyenter)
-      end
+      p.trigger(:keyenter) if event.value.to_i.to_s == event.value
     end
-    p.on(:keyescape) do |event|
+    p.on(:keyescape) do |_event|
       bye
     end
     p
@@ -34,7 +31,7 @@ def prompt
 end
 
 def show_prompt(options)
-  help = "(Use ↑/↓ arrow keys or numbers to select)"
+  help = '(Use ↑/↓ arrow keys or numbers to select)'
   prompt.select('Select an action:', options, enum: ')', cycle: true, help: help)
 rescue TTY::Reader::InputInterrupt
   bye
@@ -56,9 +53,9 @@ def args
   end
 end
 
-Kernel.trap( "INT" ) { bye }
+Kernel.trap('INT') { bye }
 
-puts "✨ μMenu ✨"
+puts '✨ μMenu ✨'
 
 loop do
   files = Dir.glob('*').sort
