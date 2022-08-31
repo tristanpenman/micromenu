@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.executables = ['um']
 
   s.add_dependency 'tty-prompt', '~> 0.23.1'
-  s.add_development_dependency 'rubocop', '~> 1.16.0'
+  s.add_development_dependency 'rubocop', '~> 1.28.2'
 end
